@@ -21,10 +21,6 @@ struct LoginView: View {
               .autocorrectionDisabled()
               .textInputAutocapitalization(.never)
             SecureField("Password", text: $viewModel.password)
-            if !viewModel.errorMessage.isEmpty {
-              Text(viewModel.errorMessage)
-                .foregroundColor(Color.red)
-            }
             Button {
               viewModel.login()
             } label: {
@@ -45,6 +41,10 @@ struct LoginView: View {
           Spacer()
         }
         .padding(.top)
+      }
+      .alert(isPresented: $viewModel.showAlert) {
+        Alert(title: Text("Error"),
+              message: Text(viewModel.errorMessage))
       }
     }
   }
